@@ -136,6 +136,33 @@
   .rate:last-child { border: 0; }
   .up { color: #1f9d48; } .down { color: #e2382f; }
 
+  /* Макет сайта Wood Wisdom в окне браузера */
+  .browser-stage { display: flex; justify-content: center; }
+  .browser {
+    width: 100%; max-width: 420px; border-radius: 14px; overflow: hidden;
+    background: #fff; color: #3d3a36; box-shadow: 0 30px 80px rgba(0, 0, 0, .45), 0 0 0 1px #2e2e40;
+    transform: rotate(2deg);
+  }
+  .browser-bar { display: flex; align-items: center; gap: 6px; padding: 10px 12px; background: #ececf1; }
+  .browser-bar i { width: 9px; height: 9px; border-radius: 50%; background: #d0d0d8; }
+  .browser-bar span { flex: 1; margin-left: 8px; padding: 3px 10px; border-radius: 6px; background: #fff; font-size: 11px; color: #777; }
+  .ww-hero {
+    height: 170px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff;
+    background:
+      radial-gradient(circle at 20% 15%, rgba(255, 214, 140, .55) 0 2px, transparent 3px),
+      radial-gradient(circle at 35% 10%, rgba(255, 214, 140, .55) 0 2px, transparent 3px),
+      radial-gradient(circle at 50% 14%, rgba(255, 214, 140, .55) 0 2px, transparent 3px),
+      linear-gradient(180deg, rgba(20, 30, 22, .35), rgba(20, 30, 22, .65)),
+      linear-gradient(160deg, #3f5a3c, #23301f 60%, #6b4e33);
+  }
+  .ww-logo { font-family: Georgia, serif; font-size: 15px; margin-bottom: 10px; }
+  .ww-title { font-size: 13px; line-height: 1.4; }
+  .ww-sec { text-align: center; font-size: 13px; padding: 14px 0 8px; }
+  .ww-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 14px 16px; font-size: 10px; }
+  .ww-grid span { display: block; height: 62px; border-radius: 6px; margin-bottom: 6px; background: linear-gradient(135deg, #c9a27a, #8a6646); }
+  .ww-grid b { display: block; font-weight: 500; }
+  .ww-grid em { font-style: normal; color: #8a6646; }
+
   /* Процесс работы с AI */
   .steps { counter-reset: s; }
   .step-num { font-family: "JetBrains Mono", monospace; font-size: 13px; color: var(--accent); margin-bottom: 14px; }
@@ -256,6 +283,40 @@
         </div>
       </article>
 
+      <article class="card span-6 reveal">
+        <div class="project">
+          <div>
+            <div class="project-meta mono">Веб · Tilda · e-commerce</div>
+            <h3>Wood Wisdom — каталог изделий из дерева</h3>
+            <p>Работающий сайт мастерской в Минске: уличная мебель и декор из дерева. Сайт используется в продажах, на него ведут из соцсетей.</p>
+            <ul class="features">
+              <li>Каталог из 50+ товаров в двух разделах: декор и уличная мебель</li>
+              <li>Карточки товаров с ценами и подробным описанием</li>
+              <li>Атмосферный первый экран и адаптивная версия для телефона</li>
+              <li>Контакты и реквизиты для заказов</li>
+            </ul>
+            <div class="links">
+              <a class="btn btn-primary" href="https://woodwisdom.tilda.ws/" target="_blank" rel="noopener">Открыть сайт ↗</a>
+            </div>
+          </div>
+          <div class="browser-stage" aria-hidden="true">
+            <div class="browser">
+              <div class="browser-bar"><i></i><i></i><i></i><span>woodwisdom.tilda.ws</span></div>
+              <div class="ww-hero">
+                <div class="ww-logo">Wood Wisdom</div>
+                <div class="ww-title">Производство уличной мебели<br>и предметов интерьера из дерева</div>
+              </div>
+              <div class="ww-sec">Декор</div>
+              <div class="ww-grid">
+                <div><span></span><b>Лампа Светлячок</b><em>80 BYN</em></div>
+                <div><span></span><b>Подсвечник Ёлка</b><em>50 BYN</em></div>
+                <div><span></span><b>Столик-поднос</b><em>90 BYN</em></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
       <article class="card span-3 reveal">
         <div class="project-meta mono">AI · вайб-кодинг</div>
         <h3>Этот сайт-портфолио</h3>
@@ -340,7 +401,7 @@
       <h2>Давайте работать вместе</h2>
       <p>Открыт к работе iOS-разработчиком или AI-разработчиком — в офисе в Минске или удалённо.</p>
       <div class="cta">
-        <a class="btn btn-primary" href="mailto:patlatov@inbox.ru">patlatov@inbox.ru</a>
+        <a class="btn btn-primary" href="mailto:kurachkinilya@gmail.com">kurachkinilya@gmail.com</a>
         <a class="btn btn-ghost" href="https://github.com/ilyakurachkin" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
     </div>
