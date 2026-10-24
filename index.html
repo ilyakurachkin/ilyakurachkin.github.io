@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Илья Курочкин — iOS & AI-разработчик</title>
+<meta name="description" content="iOS-разработчик и AI-разработчик: Swift, UIKit, SwiftUI, вайб-кодинг с Claude Code.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0b12;
+    --surface: #14141f;
+    --surface-2: #1c1c2a;
+    --border: #262637;
+    --text: #f2f2f7;
+    --muted: #9a9ab0;
+    --accent: #6f5cf0;
+    --accent-2: #9b5cf0;
+    --green: #34c759;
+    --red: #ff453a;
+    --radius: 22px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+
+  /* Фоновое свечение */
+  .glow {
+    position: absolute; inset: -200px 0 auto 0; height: 700px; pointer-events: none; z-index: -1;
+    background:
+      radial-gradient(600px 300px at 20% 30%, rgba(111, 92, 240, .35), transparent 70%),
+      radial-gradient(500px 300px at 80% 20%, rgba(155, 92, 240, .25), transparent 70%);
+  }
+
+  /* Навигация */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    background: rgba(11, 11, 18, .7);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-weight: 800; letter-spacing: -.02em; }
+  .logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 28px; font-size: 15px; color: var(--muted); }
+  .nav-links a:hover { color: var(--text); }
+
+  /* Кнопки */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 22px; border-radius: 14px; font-weight: 600; font-size: 15px;
+    transition: transform .15s ease, background .15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; }
+  .btn-ghost { border: 1px solid var(--border); background: var(--surface); }
+  .btn-ghost:hover { background: var(--surface-2); }
+
+  /* Первый экран */
+  header { position: relative; padding: 96px 0 72px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 99px; font-size: 13px;
+    background: var(--surface); border: 1px solid var(--border); color: var(--muted);
+  }
+  .badge i { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
+  h1 {
+    margin: 24px 0 20px;
+    font-size: clamp(40px, 7vw, 76px); line-height: 1.04; font-weight: 800; letter-spacing: -.035em;
+  }
+  .grad { background: linear-gradient(135deg, #8f7ff7, #c58bf7); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { max-width: 620px; font-size: 19px; color: var(--muted); }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+
+  /* Секции */
+  section { padding: 72px 0; }
+  .eyebrow { font-size: 13px; text-transform: uppercase; letter-spacing: .12em; color: var(--accent); font-weight: 600; }
+  h2 { font-size: clamp(30px, 4.5vw, 44px); letter-spacing: -.03em; line-height: 1.1; margin: 10px 0 36px; }
+
+  /* Bento-сетка */
+  .bento { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; }
+  .bento > *, .project > * { min-width: 0; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 28px; position: relative; overflow: hidden;
+    transition: border-color .2s ease, transform .2s ease;
+  }
+  .card:hover { border-color: #3a3a55; }
+  .card h3 { font-size: 22px; letter-spacing: -.02em; margin-bottom: 8px; }
+  .card p { color: var(--muted); font-size: 15px; }
+  .span-4 { grid-column: span 4; } .span-2 { grid-column: span 2; } .span-3 { grid-column: span 3; } .span-6 { grid-column: span 6; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .tag { font-size: 12.5px; padding: 5px 11px; border-radius: 99px; background: var(--surface-2); border: 1px solid var(--border); color: #c9c9da; }
+
+  /* Главный проект */
+  .project { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: center; min-height: 460px; }
+  .project-meta { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+  .features { list-style: none; margin: 20px 0 6px; display: grid; gap: 10px; }
+  .features li { display: flex; gap: 10px; font-size: 15px; color: #d4d4e2; }
+  .features li::before { content: ""; flex: none; width: 6px; height: 6px; margin-top: 9px; border-radius: 50%; background: var(--accent); }
+  .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+
+  /* Макет iPhone на CSS */
+  .phone-stage { display: flex; justify-content: center; }
+  .phone {
+    width: 250px; height: 510px; border-radius: 42px; padding: 11px;
+    background: #2a2a36; box-shadow: 0 30px 80px rgba(111, 92, 240, .35), inset 0 0 0 2px #3b3b4a;
+    transform: rotate(-4deg);
+  }
+  .screen { height: 100%; border-radius: 32px; background: #f2f2f7; color: #111; overflow: hidden; padding: 38px 14px 14px; position: relative; font-size: 11px; }
+  .island { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 76px; height: 22px; border-radius: 20px; background: #000; }
+  .scr-title { font-size: 20px; font-weight: 800; margin-bottom: 10px; }
+  .balance { border-radius: 16px; padding: 14px; color: #fff; background: linear-gradient(135deg, #453ddb, #874ded); margin-bottom: 12px; }
+  .balance small { opacity: .8; }
+  .balance b { display: block; font-size: 21px; margin-top: 4px; letter-spacing: -.01em; }
+  .actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 12px; text-align: center; }
+  .actions div { background: #fff; border-radius: 12px; padding: 8px 0 6px; font-size: 9px; color: #555; }
+  .actions span { display: block; width: 18px; height: 18px; margin: 0 auto 4px; border-radius: 6px; background: #ece9fd; }
+  .sec { font-weight: 700; font-size: 13px; margin: 2px 0 6px; display: flex; justify-content: space-between; }
+  .sec em { font-style: normal; font-weight: 500; color: #6f5cf0; font-size: 11px; }
+  .rates { background: #fff; border-radius: 14px; padding: 4px 10px; }
+  .rate { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #eee; }
+  .rate:last-child { border: 0; }
+  .up { color: #1f9d48; } .down { color: #e2382f; }
+
+  /* Процесс работы с AI */
+  .steps { counter-reset: s; }
+  .step-num { font-family: "JetBrains Mono", monospace; font-size: 13px; color: var(--accent); margin-bottom: 14px; }
+  .terminal { background: #0a0a10; border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-top: 18px; font-size: 13px; color: #b9b9cc; overflow-x: auto; }
+  .terminal .p { color: var(--accent-2); }
+  .terminal .ok { color: var(--green); }
+
+  /* Стек */
+  .stack-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { padding: 10px 16px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); font-size: 15px; }
+  .chip.hl { border-color: rgba(111, 92, 240, .6); background: rgba(111, 92, 240, .12); }
+  .stack-group + .stack-group { margin-top: 26px; }
+  .stack-group h4 { font-size: 14px; color: var(--muted); font-weight: 500; margin-bottom: 12px; }
+
+  /* Контакты */
+  .contact {
+    text-align: center; padding: 64px 28px;
+    background: radial-gradient(500px 220px at 50% 0%, rgba(111, 92, 240, .3), transparent 70%), var(--surface);
+  }
+  .contact h2 { margin-bottom: 14px; }
+  .contact p { max-width: 520px; margin: 0 auto; }
+  .contact .cta { justify-content: center; }
+
+  footer { padding: 36px 0 48px; color: var(--muted); font-size: 14px; text-align: center; }
+
+  /* Появление при прокрутке */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  @media (max-width: 900px) {
+    .project { grid-template-columns: 1fr; }
+    .span-4, .span-2, .span-3 { grid-column: span 6; }
+    .phone-stage { margin-top: 12px; }
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 0 16px; }
+    .nav-links { display: none; }
+    header { padding: 64px 0 48px; }
+    section { padding: 52px 0; }
+    .card { padding: 22px; }
+    .lead { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="logo">Илья Курочкин<span>.</span></a>
+    <div class="nav-links">
+      <a href="#projects">Проекты</a>
+      <a href="#ai">AI-разработка</a>
+      <a href="#stack">Стек</a>
+      <a href="#contact">Контакты</a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="glow"></div>
+  <div class="wrap">
+    <div class="badge reveal"><i></i> Открыт к предложениям · Минск / удалённо</div>
+    <h1 class="reveal">iOS & <span class="grad">AI-разработчик</span></h1>
+    <p class="lead reveal">Делаю iOS-приложения на Swift и быстро собираю рабочие продукты с помощью Claude Code — от идеи и прототипа до готового результата.</p>
+    <div class="cta reveal">
+      <a class="btn btn-primary" href="#projects">Смотреть проекты</a>
+      <a class="btn btn-ghost" href="https://github.com/ilyakurachkin" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+</header>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="eyebrow reveal">Проекты</div>
+    <h2 class="reveal">Что я сделал</h2>
+
+    <div class="bento">
+      <article class="card span-6 reveal">
+        <div class="project">
+          <div>
+            <div class="project-meta mono">iOS · Swift · UIKit · MVP</div>
+            <h3>BankApp — мобильный банк</h3>
+            <p>Банковское iOS-приложение с собственной дизайн-системой и модульной архитектурой. Разработано с помощью Claude Code: я ставил задачи, контролировал архитектуру и проверял каждый шаг.</p>
+            <ul class="features">
+              <li>Главный экран с балансом, быстрыми действиями и курсами</li>
+              <li>Курсы валют, криптовалют и металлов с динамикой</li>
+              <li>Конвертер валют с историей операций</li>
+              <li>Карта банкоматов на MapKit с карточкой отделения</li>
+              <li>Архитектура MVP + Coordinator, вёрстка на SnapKit</li>
+            </ul>
+            <div class="links">
+              <a class="btn btn-primary" href="https://github.com/ilyakurachkin/BankApp/tree/redesign" target="_blank" rel="noopener">Код на GitHub ↗</a>
+            </div>
+          </div>
+          <div class="phone-stage">
+            <div class="phone" aria-hidden="true">
+              <div class="screen">
+                <div class="island"></div>
+                <div class="scr-title">Главная</div>
+                <div class="balance"><small>Основной счёт</small><b>12 480,00 BYN</b></div>
+                <div class="actions">
+                  <div><span></span>Перевод</div><div><span></span>Оплата</div><div><span></span>Обмен</div><div><span></span>Ещё</div>
+                </div>
+                <div class="sec">Курсы <em>Все</em></div>
+                <div class="rates">
+                  <div class="rate"><span>USD</span><span>3,30 <b class="up">+0,32%</b></span></div>
+                  <div class="rate"><span>EUR</span><span>3,57 <b class="down">−0,15%</b></span></div>
+                  <div class="rate"><span>CNY</span><span>0,46 <b class="up">+0,08%</b></span></div>
+                  <div class="rate"><span>BTC</span><span>214 500 <b class="up">+2,1%</b></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card span-3 reveal">
+        <div class="project-meta mono">AI · вайб-кодинг</div>
+        <h3>Этот сайт-портфолио</h3>
+        <p>Собран с Claude Code за один вечер: структура, адаптивная вёрстка, анимации и публикация на GitHub Pages.</p>
+        <div class="tags"><span class="tag">Claude Code</span><span class="tag">GitHub Pages</span></div>
+      </article>
+
+      <article class="card span-3 reveal">
+        <div class="project-meta mono">Фриланс · 2023 — сейчас</div>
+        <h3>Проекты для заказчиков</h3>
+        <p>iOS-приложения и веб-проекты под задачи клиентов. Код принадлежит заказчикам, поэтому подробности — на собеседовании.</p>
+        <div class="tags"><span class="tag">iOS</span><span class="tag">AI-разработка</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="ai">
+  <div class="wrap">
+    <div class="eyebrow reveal">AI-разработка</div>
+    <h2 class="reveal">Как я работаю с Claude</h2>
+    <div class="bento steps">
+      <div class="card span-2 reveal">
+        <div class="step-num">01</div>
+        <h3>Ставлю задачу</h3>
+        <p>Разбиваю продукт на понятные шаги и формулирую требования так, чтобы AI писал нужный код, а не случайный.</p>
+      </div>
+      <div class="card span-2 reveal">
+        <div class="step-num">02</div>
+        <h3>Управляю контекстом</h3>
+        <p>Держу в фокусе архитектуру, договорённости по коду и историю решений — проект остаётся цельным.</p>
+      </div>
+      <div class="card span-2 reveal">
+        <div class="step-num">03</div>
+        <h3>Проверяю и довожу</h3>
+        <p>Читаю и тестирую сгенерированный код, исправляю ошибки и довожу результат до рабочего состояния.</p>
+      </div>
+      <div class="card span-6 reveal">
+        <div class="terminal mono">
+          <div><span class="p">❯</span> claude "добавь экран конвертера валют по архитектуре MVP"</div>
+          <div>· Создаю ConverterContract, ConverterPresenter, ConverterViewController…</div>
+          <div>· Подключаю к AppCoordinator и MockRatesProvider…</div>
+          <div class="ok">✓ Сборка прошла · проверено в симуляторе</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="eyebrow reveal">Стек</div>
+    <h2 class="reveal">Инструменты</h2>
+    <div class="card span-6 reveal">
+      <div class="stack-group">
+        <h4>iOS</h4>
+        <div class="stack-row">
+          <span class="chip hl">Swift</span><span class="chip">SwiftUI</span><span class="chip">UIKit</span><span class="chip">SnapKit</span>
+          <span class="chip">MVVM / MVP</span><span class="chip">MapKit</span><span class="chip">CoreData</span><span class="chip">async/await</span><span class="chip">Firebase</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <h4>AI-разработка</h4>
+        <div class="stack-row">
+          <span class="chip hl">Claude Code</span><span class="chip hl">Claude</span><span class="chip">Промпт-инжиниринг</span><span class="chip">Прототипирование</span>
+        </div>
+      </div>
+      <div class="stack-group">
+        <h4>Инструменты</h4>
+        <div class="stack-row">
+          <span class="chip">Xcode</span><span class="chip">Git / GitHub</span><span class="chip">REST API</span><span class="chip">Figma</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="card contact reveal">
+      <div class="eyebrow">Контакты</div>
+      <h2>Давайте работать вместе</h2>
+      <p>Открыт к работе iOS-разработчиком или AI-разработчиком — в офисе в Минске или удалённо.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="mailto:patlatov@inbox.ru">patlatov@inbox.ru</a>
+        <a class="btn btn-ghost" href="https://github.com/ilyakurachkin" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© 2026 Илья Курочкин · Сделано с Claude Code</div>
+</footer>
+
+<script>
+  // Плавное появление блоков при прокрутке
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+</script>
+</body>
+</html>
